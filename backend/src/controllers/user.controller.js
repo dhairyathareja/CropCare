@@ -2,6 +2,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import ErrorWrapper from "../utils/ErrorWrapper.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import TeachableMachine from "@sashido/teachablemachine-node";
+import uploadOnCloudinary from "../utils/uploadOnCloudinary.js";
+import axios from "axios";
 
 export const askQuestion=ErrorWrapper(async(req,res,next)=>{
     try {
@@ -104,13 +106,11 @@ async function Disease(crop,url){
         }
             
     ]
-    
     for (let i = 0; i < allCrops.length; i++) {
-        if(allCrops[i].name=crop[0]){
+        if(allCrops[i].name==crop[0]){
             cropModel+=allCrops[i].link;
         }
     }
-
     const model = new TeachableMachine({
         modelUrl: cropModel
     });
@@ -120,27 +120,64 @@ async function Disease(crop,url){
     })
     
     let cropDisease;
-    let maxscore;
+    let maxscore=0;
 
     for (let i = 0; i < result.length; i++) {
         const element = result[i];
         if(element.score>maxscore){
             maxscore=element.score;
-            crop=element.class;
+            cropDisease=element.class;
         }
     }
     return [cropDisease,maxscore];
-
     
 }
 
+async function advice(question) {
+    try {
+        console.log(question);
+        if(!question){
+            throw new ErrorHandler(401,`Please ask your query`);
+        }
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const prompt = question;
+        const result = await model.generateContent(prompt);
+
+        const answer=result.response.text();
+        console.log(answer);
+        
+        return answer;
+
+    } catch (error) {
+        throw new ErrorHandler(501,`Our System has No Advice for this disease`);
+    }
+}
 
 
 export const detetctDisease=ErrorWrapper(async(req,res,next)=>{
     
-    const{url}=req.body;
-    const crop=await detectCrop(url);
-    const cropDisease=Disease(crop,url);
+    let cloudinaryResponse;
+    try {
+        cloudinaryResponse=await uploadOnCloudinary(req.file.path);
+    } catch (error) {
+        throw new ErrorHandler(501,error.message);
+    } 
+    const url=cloudinaryResponse.url;
 
+    const crop=await detectCrop(url);
+    const cropDisease=await Disease(crop,url);
+    
+    
+    const question=`Cure for ${cropDisease[0]} in ${crop[0]}`;
+    const result=await advice(question);
+
+
+    res.status(200).json({
+        success:true,
+        message:"Detacted Successfully",
+        disease:cropDisease,
+        solution:result
+    })
 
 })
