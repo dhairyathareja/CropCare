@@ -37,39 +37,110 @@ export const askQuestion=ErrorWrapper(async(req,res,next)=>{
     
 })
 
-
-export const detectCrop=ErrorWrapper(async(req,res,next)=>{
-    
+async function detectCrop(url){
     const model = new TeachableMachine({
         modelUrl: "https://teachablemachine.withgoogle.com/models/hrT0Su0U7/"
     });
 
-    const { url } = req.body;
-    
-    return model.classify({
+    const result=await model.classify({
         imageUrl: url,
-    }).then((predictions) => {
-        // console.log(predictions);
-        let result= predictions;
-        // console.log(result);
-        let crop;
-        let maxscore=0;
-
-        for (let i = 0; i < result.length; i++) {
-            const element = result[i];
-            if(element.score>maxscore){
-                maxscore=element.score;
-                crop=element.class;        
-            }
-        }
-
-        res.status(200).json({
-            crop:crop,
-            score:maxscore
-        })
     })
-    .catch((err) => {
-        throw new ErrorHandler(401,`An Error Occured`);
+    let crop;
+    let maxscore=0;
+
+    for (let i = 0; i < result.length; i++) {
+        const element = result[i];
+        if(element.score>maxscore){
+            maxscore=element.score;
+            crop=element.class;        
+        }
+    }
+    return [crop,maxscore]        
+}
+
+async function Disease(crop,url){
+    
+    let cropModel="";
+    const allCrops=[
+        {
+            name:"coffee",
+            link:"https://teachablemachine.withgoogle.com/models/oxZcDC48I/"
+        },
+        {
+            name: "tea",
+            link: "https://teachablemachine.withgoogle.com/models/UHNQYLoR8/"
+        },
+        {
+                name: "rice",
+                link: "https://teachablemachine.withgoogle.com/models/XLxMAlTz5/"
+        },
+        {
+                name: "cotton",
+                link: "https://teachablemachine.withgoogle.com/models/fTGqrmWBx/"
+        },
+        {
+                name: "maize",
+                link: "https://teachablemachine.withgoogle.com/models/8LlTPB8oA/"
+        },
+        {
+                name: "millet",
+                link: "https://teachablemachine.withgoogle.com/models/-0zjKVJ-z/"
+        },
+        {
+                name: "wheat",
+                link: "https://teachablemachine.withgoogle.com/models/OMoV_wJxi/"
+        },
+        {
+                name: "jute",
+                link: "https://teachablemachine.withgoogle.com/models/4MogXrWtS/"
+        },
+        {
+                name: "rubber",
+                link: "https://teachablemachine.withgoogle.com/models/jNgPNbDlj/"
+        },
+        {
+                name: "sugercane",
+                link: "https://teachablemachine.withgoogle.com/models/CB6aOIvL1h/"
+        }
+            
+    ]
+    
+    for (let i = 0; i < allCrops.length; i++) {
+        if(allCrops[i].name=crop[0]){
+            cropModel+=allCrops[i].link;
+        }
+    }
+
+    const model = new TeachableMachine({
+        modelUrl: cropModel
     });
+
+    const result=await model.classify({
+        imageUrl: url,
+    })
+    
+    let cropDisease;
+    let maxscore;
+
+    for (let i = 0; i < result.length; i++) {
+        const element = result[i];
+        if(element.score>maxscore){
+            maxscore=element.score;
+            crop=element.class;
+        }
+    }
+    return [cropDisease,maxscore];
+
+    
+}
+
+
+
+export const detetctDisease=ErrorWrapper(async(req,res,next)=>{
+    
+    const{url}=req.body;
+    const crop=await detectCrop(url);
+    const cropDisease=Disease(crop,url);
+
 
 })
