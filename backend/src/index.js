@@ -8,10 +8,10 @@ const app = express();
 const PORT = process.env.PORT;
 
 
-// app.use(cors({
-//     origin: process.env.CORS_ORIGINS,
-//     credentials: true
-// }))
+app.use(cors({
+    origin: process.env.CORS_ORIGINS,
+    credentials: true
+}))
 
 
 app.use(bodyParser.json({ limit: "4kb" })); 
@@ -23,6 +23,10 @@ app.use(cookieParser());
 // Authentication
 import authRouter from './routes/auth.route.js'
 app.use('/auth',authRouter);
+
+import userRouter from './routes/user.route.js'
+import {verifyjwt} from "./middleware/verifyJWT.js"
+app.use('/user',verifyjwt,userRouter);
 
 
 

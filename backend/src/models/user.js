@@ -34,12 +34,10 @@ const userSchema= new Schema({
                 type: Date,
                 default: Date.now
             },
-            chats: [
-                {
+            chat:{
                     query: String,
                     solution: String,
-                }
-            ]
+            }
         }
     ],
     refreshToken: {
@@ -85,7 +83,6 @@ userSchema.methods.generateAccessToken = async function () {
         {
             userId: this._id,
             email: this.email,
-            username: this.username,
             name: this.name
         },
         process.env.ACCESS_TOKEN_KEY

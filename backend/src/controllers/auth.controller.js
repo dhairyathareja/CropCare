@@ -60,14 +60,13 @@ export const postSignUp=ErrorWrapper(async(req,res,next)=>{
 
 const generateAccessAndRefreshToken=async(userId)=>{
     try {
-        // console.log("Lap-1");
+        
         let user= await User.findOne({
             _id:userId
         })
         const accessToken=await user.generateAccessToken();
         const refreshToken= await user.generateRefreshToken();
-        // console.log("Ac",accessToken);
-        // console.log("Rt",refreshToken)
+        
         return {refreshToken,accessToken}
 
     } catch (error) {
@@ -100,7 +99,6 @@ export const postLogin=ErrorWrapper(async(req,res,next)=>{
     }
 
     const {accessToken,refreshToken}= await generateAccessAndRefreshToken(user._id);
-    console.log("CP:",accessToken,refreshToken);
     user.refreshToken=refreshToken
     await user.save()
 
@@ -114,7 +112,28 @@ export const postLogin=ErrorWrapper(async(req,res,next)=>{
         .json({
             success:true,
             message:"Login Succcessful",
-            user:user
+            user
         })
 })
 
+
+export const postLogout=ErrorWrapper(async(req,res,next)=>{
+    try{
+        const {email}=req.body;
+        const user=await User.findOne({email:email});
+        if(!user){
+            throw new ErrorHandler(401,`User Does not Exist`);
+        }
+        user.refreshToken="";
+        await user.save();
+        res.status(200).json({
+            success:true,
+            message:"Logout Successfully",
+            data:user
+        })
+    }
+    catch (error) {
+        throw new ErrorHandler(501,`An Error Occured While Logging out`);
+    }
+    
+})
