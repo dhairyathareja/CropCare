@@ -1,0 +1,143 @@
+.HomePage{
+    width: 80%;
+    margin: 5% auto;
+}
+
+.imgHome img{
+    border-radius: 25px;
+    height: 80%;
+    width: 75%;
+}   
+
+.imgHome{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin: 0px auto;
+}
+
+.introSection{
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.introBox{
+    width: 40%;
+    margin: 5% 0%;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px 0 rgba(0, 255, 255, 0.9);
+}
+
+.heading{
+    font-weight: bold;
+    margin: 5%;
+    text-align: center;
+    font-size: xxx-large;
+    color: aqua;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.description{
+    font-size: x-large;
+    color: beige;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 2% 2%;
+}
+
+strong{
+    color: rgb(0, 145, 255);
+}
+
+/* MEDIA QUERIES */
+
+/*  Mobile devices  */
+@media (max-width: 600px) {
+  .HomePage {
+    width: 95%;
+    margin: 10% auto;
+  }
+
+  .imgHome img {
+    width: 100%;
+    height: auto;
+    margin: 5%;
+  }
+
+  .imgHome {
+    width: 100%;
+    margin: 5% auto;
+  }
+
+  .introBox {
+    width: 90%;
+    max-height: 20%;
+    margin: 20% auto;
+    overflow: scroll;
+    padding: 2%;
+  }
+
+  .heading {
+    font-size: x-large;
+  }
+
+  .description {
+    font-size: x-large;
+    color: beige;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 2% 2%;
+    
+    /* Fit Word within Box */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+}
+
+
+/*  Tablets  */
+@media (max-width: 900px) {
+  .HomePage {
+    width: 90%;
+  }
+
+  .imgHome img {
+    width: 90%;
+  }
+
+  .introBox {
+    width: 80%;
+    margin: 6% auto;
+  }
+
+  .heading {
+    font-size: xx-large;
+  }
+
+  .description {
+    font-size: large;
+  }
+}
+
+
+/* 👉 Small laptops (max-width: 1200px) */
+@media (max-width: 1200px) {
+  .HomePage {
+    width: 85%;
+  }
+
+  .introBox {
+    width: 60%;
+    margin: 4% auto;
+  }
+
+  .heading {
+    font-size: xx-large;
+  }
+
+  .description {
+    font-size: x-large;
+  }
+}

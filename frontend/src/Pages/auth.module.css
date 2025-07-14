@@ -1,0 +1,143 @@
+.loginPage,.signUpPage{
+    width: 70%;
+    margin: 5% auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+}
+
+.loginIcon,.signUpIcon{
+    width: 30%;
+}
+
+.loginBtn,.signUpBtn{
+    border-radius: 15px ;
+    width: 50%;
+    margin: 5% auto;
+    background-color: blue;
+    color: white;
+    font-size: 90%;
+    cursor: pointer;
+}
+
+.loginDetails,.logoutDetails{
+    width: 50%;
+    font-size: xx-large;
+}
+
+.signUpDetails{
+    font-size: xx-large;
+}
+
+.loginDetails input,.signUpDetails input{
+    width: 50%;   
+}
+
+.inpDiv{
+    font-size: large;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 2% auto;
+}
+
+.inpDiv label{
+    flex: 1;
+    font-weight: bold;
+    color: bisque;
+}
+
+.inpDiv input{
+    padding: 1%;
+    flex: 2;
+    border-radius: 10px;
+}
+
+
+/* MEDIA QUERIES */
+
+/* Mobile devices */
+@media (max-width: 600px) {
+  .loginPage,
+  .signUpPage {
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .loginIcon,
+  .signUpIcon {
+    width: 70%;
+  }
+
+  .loginDetails,
+  .signUpDetails {
+    width: 100%;
+    font-size: large;
+    text-align: center;
+  }
+
+  .inpDiv {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 90%;
+  }
+
+  .inpDiv input {
+    width: 100%;
+  }
+
+  .loginDetails input,
+  .signUpDetails input {
+    width: 100%;
+  }
+
+  .loginBtn,
+  .signUpBtn {
+    width: 70%;
+    font-size: medium;
+    cursor: pointer;
+  }
+}
+
+
+/*  Tablets  */
+@media (max-width: 900px) {
+  .loginPage,
+  .signUpPage {
+    flex-direction: column;
+    width: 85%;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .loginIcon,
+  .signUpIcon {
+    width: 50%;
+  }
+
+  .loginDetails,
+  .signUpDetails {
+    width: 100%;
+    font-size: x-large;
+    text-align: center;
+  }
+
+  .inpDiv {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80%;
+  }
+
+  .inpDiv input {
+    width: 100%;
+  }
+
+  .loginBtn,
+  .signUpBtn {
+    width: 60%;
+    font-size: medium;
+    cursor: pointer;
+  }
+}

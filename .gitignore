@@ -1,0 +1,15 @@
+#node modules
+/frontend/node_modules
+/backend/node_modules
+
+# data file
+/backend/src/data
+
+# env files
+/backend/.env
+
+#frontend
+/frontend/build
+
+# DemoVideo
+/CropcareDemo.mp4

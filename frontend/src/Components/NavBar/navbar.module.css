@@ -1,0 +1,119 @@
+.navbar {
+  width: 100%;
+  background-color: #393E46;
+  display: flex;
+  position: fixed;
+  top: 0;
+  justify-content: space-around;
+  align-items: center;
+  height: 7%;
+  z-index: 10;
+}
+
+/* Logo */
+.webLogo {
+  height: 100%;
+  width: 5%;
+}
+
+/* Nav links */
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.navItem:link,
+.navItem:visited {
+  text-decoration: none;
+  color: blue;
+  font-size: x-large;
+}
+
+.navItem:active {
+  color: white;
+}
+
+.navItem:hover {
+  text-shadow: 1px 1px #61b1f6;
+}
+
+/* Hamburger styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+}
+
+/* Profile */
+.profileSection {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-style: italic;
+  width: 7%;
+}
+
+.open {
+  display: flex !important;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #393E46;
+  padding: 1rem;
+  border-radius: 10px;
+  z-index: 100;
+}
+
+/* Media Queries */
+
+/*  Mobile */
+@media (max-width: 600px) {
+  .navLinks {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .webLogo {
+    width: 15%;
+  }
+
+  .profileSection {
+    display: none;
+  }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .navItem {
+    font-size: large;
+  }
+
+  .webLogo {
+    width: 10%;
+  }
+
+  .profileSection {
+    display: none;
+  }
+}
+
+/* Mini Laptop */
+@media (max-width: 1200px) {
+  .navItem {
+    font-size: large;
+  }
+}
