@@ -26,7 +26,6 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "4kb" }));
 app.use(cookieParser());
 
 
-
 app.use(express.static(path.join(__dirname, '../public/build')));
 
 
